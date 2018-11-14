@@ -37,16 +37,17 @@ def watsonNLU():
     else:
         #Echo
         req = request.json()
+        print("THE JSON",json.dumps(req))
         for event in req['entry']:
             messaging = event['messaging']
             for message in messaging:
-            if message.get('message'):
-                #Facebook Messenger ID for user so we know where to send response back to
-                recipient_id = message['sender']['id']
-                if message['message'].get('text'):
-                    response_sent_text = get_message()
-                    send_message(recipient_id, response_sent_text)
-                    return 'Message sent.'
+                if message.get('message'):
+                    #Facebook Messenger ID for user so we know where to send response back to
+                    recipient_id = message['sender']['id']
+                    if message['message'].get('text'):
+                        response_sent_text = get_message()
+                        send_message(recipient_id, response_sent_text)
+                        return 'Message sent.'
         # return return_string
         return 'Message not sent.'
 
