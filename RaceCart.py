@@ -46,7 +46,7 @@ def watsonNLU():
                     #Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        response_sent_text = message['message']['text']
+                        response_sent_text = createResponse(message['message']['text'])
                         send_message_new(recipient_id, response_sent_text)
                         return 'Message sent.'
         # return return_string
