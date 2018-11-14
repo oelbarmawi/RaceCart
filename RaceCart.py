@@ -72,7 +72,7 @@ def getItemLocations(response):
     return response_string
 
 def verify_fb_token(token_sent):
-    if token_sent == VERIFY_TOKEN:
+    if token_sent == FB_VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
 
