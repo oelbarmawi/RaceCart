@@ -10,7 +10,7 @@ IBM_API_KEY = "HLiuAqMBW9td4_lrcKwo67alISdgzflsv0u3KwxggLkz"
 URL = "https://gateway.watsonplatform.net/natural-language-understanding/api"
 
 TARGETS = ['peanut butter', 'milk', 'eggs']
-item_locations = {'peanut butter': 'aisle 6', 'milk': 'aisle 9', 'eggs': 'aisle 16'}
+item_locations = {'peanut butter': 'Aisle 6', 'milk': 'Aisle 9', 'eggs': 'Aisle 16'}
 
 app = Flask(__name__)
 FB_ACCESS_TOKEN = 'EAAC7ZC1ZAgpTQBABQy4KUy27rOWr7VFLQ16Ok0CHo6lrqh84aT8mFq7xdJp5sHy0wSQYE7nZA6RyN5DW4vxpYZBgiyBNHcIGUC0GXwyZCADwSZB8TuBCPFqdbFnjou40q5WabIwZAIcVU2fHVJSM9KwtlT99BiUxkd8d2C52EuynAZDZD'
@@ -22,6 +22,7 @@ bot = Bot(FB_VERIFY_TOKEN)
 def testWatsonNLU():
     if request.method == 'GET':
         return "It's working."
+        # return createResponse("Where is the peanut butter? and milk?")
     else:
         # req = request.json()
         sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
@@ -69,16 +70,17 @@ def createResponse(raw_text):
 
 
 def getItemLocations(response):
-    response_items, response_locations = [], []
+    # response_items, response_locations = [], []
     response_targets = response['sentiment']['targets']
-    
+    response_string = ""
+
     for r in response_targets:
         item = r['text']
         if item in item_locations:
-            response_items.append(item)
-            response_locations.append(item_locations[item])
-
-    response_string = "For the items: " + ", ".join(response_items) + ".\nGo to " + ", ".join(response_locations)
+            response_string += item + " is in " + item_locations[item] + ". "
+            # response_items.append(item)
+            # response_locations.append(item_locations[item])
+    # response_string = "For the items: " + ", ".join(response_items) + ".\nGo to " + ", ".join(response_locations)
     return response_string
 
 def verify_fb_token(token_sent):
