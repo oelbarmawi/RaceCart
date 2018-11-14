@@ -9,8 +9,8 @@ FB_API_URL = "https://graph.facebook.com/v2.6/me/messages"
 IBM_API_KEY = "HLiuAqMBW9td4_lrcKwo67alISdgzflsv0u3KwxggLkz"
 URL = "https://gateway.watsonplatform.net/natural-language-understanding/api"
 
-TARGETS = ['peanut butter', 'milk', 'eggs']
-item_locations = {'peanut butter': 'aisle 6', 'milk': 'aisle 9', 'eggs': 'aisle 16'}
+TARGETS = ['peanut butter', 'milk', 'eggs', 'fruit', 'pasta sauce', 'cereal']
+item_locations = {'peanut butter': 'Aisle 6', 'milk': 'Aisle 9', 'eggs': 'Aisle 16', 'fruit': 'Aisle 2', 'pasta sauce': 'Aisle 14', 'cereal': 'Aisle 19'}
 
 app = Flask(__name__)
 FB_ACCESS_TOKEN = 'EAAC7ZC1ZAgpTQBABQy4KUy27rOWr7VFLQ16Ok0CHo6lrqh84aT8mFq7xdJp5sHy0wSQYE7nZA6RyN5DW4vxpYZBgiyBNHcIGUC0GXwyZCADwSZB8TuBCPFqdbFnjou40q5WabIwZAIcVU2fHVJSM9KwtlT99BiUxkd8d2C52EuynAZDZD'
@@ -21,7 +21,8 @@ bot = Bot(FB_VERIFY_TOKEN)
 @app.route('/watson_nlu_test', methods=['POST', 'GET'])
 def testWatsonNLU():
     if request.method == 'GET':
-        return "It's working."
+        # return "It's working."
+        return createResponse("Where is the milk?")
     else:
         # req = request.json()
         sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
