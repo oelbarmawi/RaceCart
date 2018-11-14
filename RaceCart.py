@@ -14,7 +14,7 @@ item_locations = {'peanut butter': 'aisle 6', 'milk': 'aisle 9', 'eggs': 'aisle 
 app = Flask(__name__)
 FB_ACCESS_TOKEN = 'EAAC7ZC1ZAgpTQBABQy4KUy27rOWr7VFLQ16Ok0CHo6lrqh84aT8mFq7xdJp5sHy0wSQYE7nZA6RyN5DW4vxpYZBgiyBNHcIGUC0GXwyZCADwSZB8TuBCPFqdbFnjou40q5WabIwZAIcVU2fHVJSM9KwtlT99BiUxkd8d2C52EuynAZDZD'
 FB_VERIFY_TOKEN = 'racecat_watson_nlu'
-bot = Bot(ACCESS_TOKEN)
+bot = Bot(FB_VERIFY_TOKEN)
 
 @app.route('/')
 @app.route('/watson_nlu_test', methods=['POST', 'GET'])
@@ -23,12 +23,24 @@ def testWatsonNLU():
         token_sent = request.args.get("hub.verify_token")
         return verify_fb_token(token_sent)
     else:
-        req = request.json()
-        
+        # req = request.json()
         sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
         return_string = ""
         for sample_text in sample_texts:
             return_string += createResponse(sample_text) + "\n"
+        return return_string
+
+@app.route('/watson_nlu', methods=['POST', 'GET'])
+def watsonNLU():
+    if request.method == 'GET':
+        token_sent = request.args.get("hub.verify_token")
+        return verify_fb_token(token_sent)
+    else:
+        req = request.json()
+        # sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
+        # return_string = ""
+        # for sample_text in sample_texts:
+        #     return_string += createResponse(sample_text) + "\n"
         return return_string
 
 def createResponse(raw_text):
