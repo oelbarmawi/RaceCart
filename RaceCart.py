@@ -35,12 +35,20 @@ def watsonNLU():
         token_sent = request.args.get("hub.verify_token")
         return verify_fb_token(token_sent)
     else:
+        #Echo
         req = request.json()
-        # sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
-        # return_string = ""
-        # for sample_text in sample_texts:
-        #     return_string += createResponse(sample_text) + "\n"
-        return return_string
+        for event in req['entry']:
+          messaging = event['messaging']
+          for message in messaging:
+            if message.get('message'):
+                #Facebook Messenger ID for user so we know where to send response back to
+                recipient_id = message['sender']['id']
+                if message['message'].get('text'):
+                    response_sent_text = get_message()
+                    send_message(recipient_id, response_sent_text)
+                    return 'Message sent.'
+        # return return_string
+        return 'Message not sent.'
 
 def createResponse(raw_text):
     natural_language_understanding = NaturalLanguageUnderstandingV1(
