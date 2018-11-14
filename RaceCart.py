@@ -4,7 +4,7 @@ from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 import Features, EntitiesOptions, SentimentOptions
 from pymessenger.bot import Bot
 
-
+FB_API_URL = "https://graph.facebook.com/v2.6/me/messages"
 IBM_API_KEY = "HLiuAqMBW9td4_lrcKwo67alISdgzflsv0u3KwxggLkz"
 URL = "https://gateway.watsonplatform.net/natural-language-understanding/api"
 
@@ -46,7 +46,7 @@ def watsonNLU():
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
                         response_sent_text = message['message']['text']
-                        send_message(recipient_id, response_sent_text)
+                        send_message_new(recipient_id, response_sent_text)
                         return 'Message sent.'
         # return return_string
         return 'Message not sent.'
@@ -89,6 +89,26 @@ def send_message(recipient_id, response):
     #sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+
+def send_message_new(recipient_id, response):
+    payload = {
+        "message_type": "RESPONSE",
+        "recipient": {
+            "id": recipient_id,
+        },
+        "message": {
+            "text": response
+        }
+    }
+    auth = {
+        "access_token": FB_ACCESS_TOKEN
+    }
+    response = requests.post(
+        FB_API_URL,
+        params=auth,
+        json=payload
+    )
+    return response.json()
 
 if __name__ == '__main__':
     app.run()
