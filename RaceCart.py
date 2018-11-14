@@ -36,7 +36,7 @@ def watsonNLU():
         return verify_fb_token(token_sent)
     else:
         #Echo
-        req = request.json()
+        req = request.get_json()
         print("THE JSON",json.dumps(req))
         for event in req['entry']:
             messaging = event['messaging']
