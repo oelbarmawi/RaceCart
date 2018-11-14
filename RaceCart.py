@@ -20,8 +20,7 @@ bot = Bot(FB_VERIFY_TOKEN)
 @app.route('/watson_nlu_test', methods=['POST', 'GET'])
 def testWatsonNLU():
     if request.method == 'GET':
-        token_sent = request.args.get("hub.verify_token")
-        return verify_fb_token(token_sent)
+        return "It's working."
     else:
         # req = request.json()
         sample_texts = ["Where is the peanut butter, and eggs?", "Where's the milk", "I'm looking for eggs today."]
