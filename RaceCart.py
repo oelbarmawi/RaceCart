@@ -54,18 +54,20 @@ def watsonNLU():
         return 'Message not sent.'
 
 def createResponse(raw_text):
+    raw_text = raw_text.lower()
     natural_language_understanding = NaturalLanguageUnderstandingV1(
         version='2018-03-16',
         iam_apikey=IBM_API_KEY,
         url=URL
     )
-
-    response = natural_language_understanding.analyze(
-        # url='www.ibm.com',
-        text=raw_text,
-        features=Features(sentiment=SentimentOptions(targets=TARGETS))).get_result()
-    # print(json.dumps(response, indent=2))
-
+    try:
+        response = natural_language_understanding.analyze(
+            # url='www.ibm.com',
+            text=raw_text,
+            features=Features(sentiment=SentimentOptions(targets=TARGETS))).get_result()
+        # print(json.dumps(response, indent=2))
+    except:
+        return "I'm sorry, I did not understand. Can you repeat that?"
     return getItemLocations(response)
 
 
